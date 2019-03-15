@@ -32,8 +32,21 @@
       Returns the previous expression from the list of expressions in the textStr parameter
 
 */
+// DDOES:
+window.onload = int;
+// DFUNC:
+function int() {
+      // DVARO:
+      var calcButtons = document.getElementsByClassName('calcButton');
+      for (var i = 0; i < calcButtons.length; i++) {
+            calcButtons[i].addEventListener('click', buttonClick);
+      }
+      // document.getElementById('calcWindow').addEventListener('keydown', calcKeys);
+};
+// DFUNC:
+function buttonClick(e) {
 
-
+};
 
 
 
