@@ -32,6 +32,7 @@
       Returns the previous expression from the list of expressions in the textStr parameter
 
 */
+
 // DDOES:
 window.onload = int;
 // DFUNC:
@@ -41,13 +42,57 @@ function int() {
       for (var i = 0; i < calcButtons.length; i++) {
             calcButtons[i].addEventListener('click', buttonClick);
       }
-      // document.getElementById('calcWindow').addEventListener('keydown', calcKeys);
+      document.getElementById('calcWindow').addEventListener('keydown', calcKeys);
 };
 // DFUNC:
 function buttonClick(e) {
-
+      // DVARL:
+      var calcValue = document.getElementById('calcWindow').value,
+            calcDecimal = document.getElementById('decimals').value,
+            buttonValue = e.target.value;
+      // DSWCA:
+      switch (buttonValue) {
+            case 'del':
+                  calcValue = "";
+                  break;
+            case 'bksp':
+                  calcValue = eraseChar(calcValue);
+                  break;
+            case 'enter':
+                  calcValue += ` = ${evalEq(calcValue,calcDecimal)}\n`
+                  break;
+            case 'prev':
+                  calcValue += lastEq(calcValue);
+                  break;
+            default:
+                  calcValue = calcValue + buttonValue;
+      }
+      // DDOES:
+      document.getElementById('calcWindow').value = calcValue;
+      // DDOES:
+      document.getElementById('calcWindow').focus()
 };
-
+// DFUNC:
+function calcKeys(e) {
+      // DVARL:
+      var calcValue = document.getElementById('calcWindow').value,
+            calcDecimal = document.getElementById('decimals').value;
+      console.log(e)
+      // DSWCA:
+      switch (e) {
+            case 'Delete':
+                  calcValue = "";
+                  break;
+            case 'Enter':
+                  calcValue += ` = ${evalEq(calcValue,calcDecimal)}\n`
+                  break;
+            case 'ArrowUp':
+                  calcValue += lastEq(calcValue);
+                  break;
+            default:
+                  break;
+      }
+}
 
 
 
