@@ -33,69 +33,79 @@
 
 */
 
-// DDOES:
+// DDOES: Loads the int funtion when the browser window is loaded
 window.onload = int;
-// DFUNC:
+// DFUNC: The int function
 function int() {
-      // DVARO:
-      var calcButtons = document.getElementsByClassName('calcButton');
+      // DVARL: Local variables for this function
+      var calcButtons = document.getElementsByClassName('calcButton'),
+            calcWindow = document.getElementById('calcWindow');
+      // DLOOP: Loops through the calcButton and adds an event listener for when they are clicked on
       for (var i = 0; i < calcButtons.length; i++) {
             calcButtons[i].addEventListener('click', buttonClick);
       }
-      document.getElementById('calcWindow').addEventListener('keydown', calcKeys);
+      // DDOES: Listens for when the keyboard is pressed down and runs the calcKeys funtion when it is
+      calcWindow.addEventListener('keydown', calcKeys);
 };
-// DFUNC:
+// DFUNC: The buttonClick Function
 function buttonClick(e) {
-      // DVARL:
-      var calcValue = document.getElementById('calcWindow').value,
+      // DVARL: Local variables for this function
+      var calcValue = calcWindow.value,
             calcDecimal = document.getElementById('decimals').value,
             buttonValue = e.target.value;
-      // DSWCA:
+      // DSWCA: Runs when the button are clicked and pases the event through each case
       switch (buttonValue) {
             case 'del':
+                  // DDOES: Changes calcValue to an empty string
                   calcValue = "";
                   break;
             case 'bksp':
+                  // DDOES: runs the eraseChar function then sets the calcValue to it
                   calcValue = eraseChar(calcValue);
                   break;
             case 'enter':
-                  calcValue += ` = ${evalEq(calcValue,calcDecimal)}\n`
+                  // DDOES: Adds the template String to the calcValue
+                  calcValue += ` = ${evalEq(calcValue, calcDecimal)}\n`
                   break;
             case 'prev':
+                  // DDOES: addds the value from lastEq to calcValue
                   calcValue += lastEq(calcValue);
                   break;
             default:
-                  calcValue = calcValue + buttonValue;
+                  // DDOES: Adds the buttonValue to the calcValue
+                  calcValue += buttonValue;
       }
-      // DDOES:
-      document.getElementById('calcWindow').value = calcValue;
-      // DDOES:
-      document.getElementById('calcWindow').focus()
+      // DDOES: change the clacWindow value to equal calcValue
+      calcWindow.value = calcValue;
+      // DDOES: Changes where the pointer is
+      calcWindow.focus()
 };
-// DFUNC:
+// DFUNC: The calcKeys function
 function calcKeys(e) {
-      // DVARL:
-      var calcValue = document.getElementById('calcWindow').value,
-            calcDecimal = document.getElementById('decimals').value;
-      console.log(e)
-      // DSWCA:
-      switch (e) {
-            case 'Delete':
+      // DVARL: Local variables for this function
+      var calcValue = calcWindow.value,
+            calcDecimal = document.getElementById('decimals').value,
+            eKeyCode = e.keyCode;
+      console.log(eKeyCode)
+      // DSWCA: Runs when the keys are pressed and pases the event through each case
+      switch (eKeyCode) {
+            case 8:
+                  // DDOES: Changes calcValue to an empty string
                   calcValue = "";
                   break;
-            case 'Enter':
-                  calcValue += ` = ${evalEq(calcValue,calcDecimal)}\n`
+            case 13:
+                  // DDOES: Adds the template String to the calcValue
+                  calcValue += ` = ${evalEq(calcValue, calcDecimal)}`
                   break;
-            case 'ArrowUp':
-                  calcValue += lastEq(calcValue);
-                  break;
-            default:
+            case 38:
+                  // DDOES: addds the value from lastEq to calcValue
+                  calcValue += lastEq(calcWindow.value);
+                  e.preventDefault()
                   break;
       }
+      // DDOES: change the clacWindow value to equal calcValue
+      calcWindow.value = calcValue;
 }
-
-
-
 /* ===================================================================== */
 
 function eraseChar(textStr) {
